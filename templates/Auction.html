@@ -10,10 +10,23 @@
 
     <style>
         /* General body styling */
+
+        @font-face {
+            font-family: 'Digital7';
+            src: url('{{ url_for('static', filename='src/digital-7_italic.ttf') }}') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'PL_font';
+            src: url('{{ url_for('static', filename='src/PL_Font.ttf') }}') format('truetype');
+        }
+
+
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
+            font-family: 'PL_font', sans-serif; /* Use Montserrat for a modern look */
         }
 
         /* Header styling */
@@ -35,7 +48,7 @@
         .header h1 {
             font-size: 24px;
             margin: 0;
-            font-weight: bold;
+            font-weight: normal;
             color: white;
         }
 
@@ -47,7 +60,7 @@
 
         /* Background image section */
         .background-section {
-            background-image: url('src/auctiontop.jpg'); /* Background image URL */
+            background-image: url('{{ url_for('static', filename='src/Richard-Madley.jpg') }}');
             background-size: cover;
             background-position: center;
             height: 91vh; /* Full viewport height */
@@ -56,44 +69,746 @@
             align-items: center;
         }
 
-        /* Start button styling */
-        .start-button {
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background-color: #ff6600; /* Orange button color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
-            position: absolute;
-            top: 85%;   /* Moves the button down by 200 pixels from the top of its container */
-            left: 46%;  /* Moves the button right by 100 pixels from the left edge of its container */
-        }
-
         .start-button:hover {
             background-color: #cc5200; /* Darker orange on hover */
         }
+
+        /* Sidebar styling */
+        .sidebar {
+            
+            width: 200px;
+            padding-top: 75px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            
+        }
+
+        /* Button styling */
+        .sidebar button {
+            width: 90%;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            color:#003366;
+            background-color: #ff6600;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            cursor: pointer;   
+            font-family: 'Digital7', sans-serif;
+        }
+
+        .sidebar button:hover {
+            background-color: #cc5200;
+        }
+
+        /* Active button styling */
+        .sidebar button.active {
+            background-color: #cc5200; /* Darker orange for active state */
+            border: 2px solid #ffcc00; /* Adds a gold border for active button */
+        }
+
+/* Marquee/Ticker styling */
+.ticker {
+    background-color: blue;
+    color: white;
+    padding: 3px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    position: fixed;
+    bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-text {
+    display: inline-block;
+    font-family: 'Digital7', sans-serif;
+    white-space: nowrap;  /* Prevents text from breaking into multiple lines */
+    animation: marquee 50s linear infinite; /* Adjusted speed */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Start off to the right */
+    }
+    100% {
+        transform: translateX(-100%); /* End off to the left */
+    }
+}
+
+
+
+/* Button container */
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 buttons per row */
+    gap: 20px; /* Space between buttons */
+    justify-content: center;
+    padding-top: 350px;
+}
+
+/* Button styling */
+.team-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    position: relative; /* For positioning shadow/effect */
+    transition: all 0.3s ease;
+}
+
+/* Image styling */
+.team-button img {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+/* Active state for the selected button */
+.team-button.active {
+    transform: translateY(-5px); /* Lift the button */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow for lifting effect */
+    background-color: rgba(0, 0, 0, 0.1); /* Add a subtle background highlight */
+    border-radius: 15px; /* Slight border-radius change */
+}
+
+/* Image effect when button is active */
+.team-button.active img {
+    opacity: 0.9; /* Slightly fade the image */
+    transform: scale(1.25); /* Slightly enlarge the image for subtle emphasis */
+}
+
+        /* Display box styling */
+        .display-box {
+    position: fixed;
+    top: 20%;
+    right: 10px; /* Positioned on the right side */
+    width: 300px;
+    height: 120px;
+    background-color: #003366; /* Dark blue background */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffcc00; /* Yellow text color */
+    font-family: 'Digital7', sans-serif; /* Apply Digital-7 font */
+    font-size: 36px; /* Adjust size as needed */
+    text-align: center;
+}
+
+#current-bid {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Keyframe animation for scale and opacity */
+@keyframes bidUpdate {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-bid {
+    animation: bidUpdate 0.3s ease-in-out;
+}
+
+
+        /* Button to simulate bid increase */
+        .bid-button {
+            width: 150px;
+            position: fixed;
+            bottom: 150px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #ff6600; /* Orange background */
+            color:#003366;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Digital7', sans-serif; /* Apply Digital-7 font */
+        }
+
+        /* Button to simulate bid increase */
+        .Sell-button {
+            width: 150px;
+            position: fixed;
+            bottom: 50px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #ff6600; /* Orange background */
+            color:#003366;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Digital7', sans-serif; /* Apply Digital-7 font */
+        }
+
+        /* Popup styling */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffcc00;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        /* Player details display box */
+        /* Player details display box */
+.player-display {
+    position: absolute;   /* Make it absolute to allow positioning relative to the body */
+    top: 75px;            /* Position it 75px from the top */
+    left: 200px;          /* Position it 200px from the left */
+    font-size: 18px;
+    color: #003366;
+    font-family: 'Digital7', sans-serif;
+    background-color: #ffcc00;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    height: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Auction Summary Popup styling */
+.auction-popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        /* Close button for popup */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Team list styling in popup */
+        .team-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .team-list li {
+            margin-bottom: 10px;
+        }
+
+        .team-list button {
+            padding: 10px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .team-list button:hover {
+            background-color: #cc5200;
+        }
+/* Overlay for popup */
+.overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999; /* Below popup but above everything else */
+        }
     </style>
+    <link rel="icon" href="{{ url_for('static', filename='src/logo.jpg') }}" type="image/jpeg">
 </head>
 <body>
 
     <!-- Header Section -->
     <div class="header">
         <!-- IPL Logo -->
-        <img src="src/logo.jpg" alt="IPL Logo">
+        <img src="{{ url_for('static', filename='src/logo.jpg') }}" alt="IPL Logo">
 
         <!-- Welcome Text -->
         <div class="center-text">
-            <h1>Welcome to IPL Player Auction 2024</h1>
-        </div>
+          <h1>Welcome to IPL Player Auction 2025</h1>
+          
+      </div>
     </div>
 
     <!-- Background Section with Start Button -->
     <div class="background-section">
-        
+    <!-- Sidebar with buttons -->
+    <div class="sidebar">
+        <button class="active" onclick="activateButton(this, 'Batter')">Batsmen</button>
+        <button onclick="activateButton(this, 'Bowler')">Bowlers</button>
+        <button onclick="activateButton(this, 'Allrounder')">All-rounders</button>
+        <button onclick="activateButton(this, 'WK-Batter')">Wicket Keepers</button>
+        <div style="width: 200px; padding-left: 20px;">
+            <button onclick="pickPlayer()">Pick A Player</button>
+            <button onclick="showPopup()">Auction Summary</button>
+        </div>
     </div>
+    <audio id="ipl-trumpet" src="{{ url_for('static', filename='src/ipl_trumpet.mp3') }}"></audio>
+<!-- Popup for selecting teams -->
+<div id="auction-popup" class="auction-popup">
+    <button class="close-btn" onclick="closePopup()">×</button>
+    <h3>Select a Team</h3>
+    <ul class="team-list" id="team-list">
+      <!-- Teams will be dynamically inserted here -->
+    </ul>
+</div>
+
+<!-- Overlay for popup -->
+<div id="overlay" class="overlay"></div>
+    <!-- Display picked player details here -->
+    <div id="player-display" class="player-display"></div>
+
+    <!-- Popup for no players left -->
+    <div id="popup" class="popup">No player left of this role!</div>
+
+          <!-- Display Box for Current Bid -->
+        <div class="display-box">
+            Current Bid: ₹<span id="current-bid">0.0</span> Cr
+        </div>
+
+        <!-- Button to simulate bid increase -->
+        <button class="bid-button" onclick="increaseBid()">Increase Bid</button>
+
+        <button class="Sell-button" onclick="sellPlayer()">Sell</button>
+
+    <!-- JavaScript to handle bid updates -->
+        <!-- Button Container -->
+        <div class="button-container">
+            <!-- Buttons with team logos -->
+            <button class="team-button" onclick="selectTeam_Button(this,'Kolkata Knight Riders')">
+                <img src="{{ url_for('static', filename='src/KKR.jpg') }}" alt="Kolkata Knight Riders">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Delhi Capitals')">
+                <img src="{{ url_for('static', filename='src/DC.jpg') }}" alt="Delhi Capitals">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Chennai Super Kings')">
+                <img src="{{ url_for('static', filename='src/CSK.jpeg') }}" alt="Chennai Super Kings">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Lucknow Super Giants')">
+                <img src="{{ url_for('static', filename='src/LSG.png') }}" alt="Lucknow Super Giants">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Punjab Kings')">
+                <img src="{{ url_for('static', filename='src/PBKS.png') }}" alt="Punjab Kings">
+            </button>
+
+            <!-- Row 2 -->
+            
+            <button class="team-button" onclick="selectTeam_Button(this,'Mumbai Indians')">
+                <img src="{{ url_for('static', filename='src/MI.jpg') }}" alt="Mumbai Indians">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Royal Challengers Bangalore')">
+                <img src="{{ url_for('static', filename='src/RCB.jpg') }}" alt="Royal Challengers Bangalore">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Sunrisers Hyderabad')">
+                <img src="{{ url_for('static', filename='src/SRH.png') }}" alt="Sunrisers Hyderabad">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Rajasthan Royals')">
+                <img src="{{ url_for('static', filename='src/RR.jpg') }}" alt="Rajasthan Royals">
+            </button>
+
+            <button class="team-button" onclick="selectTeam_Button(this,'Gujarat Titans')">
+                <img src="{{ url_for('static', filename='src/GT.jpg') }}" alt="Gujarat Titans">
+            </button>
+        </div>
+      <!-- Marquee/Ticker Section -->
+      <div class="ticker">
+        <span id="ticker-text" class="ticker-text">
+            Purse Remaining:
+            {% for team in teams %}
+                {{ team.team }}: ₹{{ team.purse }} Cr{% if not loop.last %} | {% endif %}
+            {% endfor %}
+        </span>
+    </div>
+
+    </div>
+
+    <script>
+
+        // Pass Python variables as JSON objects to JavaScript
+        const teamsData = {{ teams | tojson }};
+        const auctionData = {{ auctions | tojson }};
+        let selectedRole = 'Batter'; // Default role
+        let selectedTeam = null; // Store selected team
+        let currentBid = 0.0; // Store current bid
+        let currentPlayer = null; // Store current player
+        let basePrice = null;
+        function updateTicker() {
+        const tickerText = document.getElementById('ticker-text');
+        let tickerContent = 'Purse Remaining: ';
+
+        // Loop through teamsData and build the ticker content
+        teamsData.forEach((team, index) => {
+            tickerContent += `${team.team}: ₹${team.purse} Cr`;
+            if (index < teamsData.length - 1) {
+                tickerContent += ' | '; // Add separator between teams
+            }
+        });
+
+        // Update the ticker text
+        tickerText.textContent = tickerContent;
+    }
+
+    // Call the function to initialize the ticker content
+    updateTicker();
+        // Log the data to the console
+        console.log("Teams Data:", teamsData);
+        console.log("Auctions Data:", auctionData);
+    
+      // Function to handle active button selection
+      // Function to handle active button selection
+      function activateButton(selectedButton, role) {
+          // Remove 'active' class from all buttons
+          const buttons = document.querySelectorAll('.sidebar button');
+          buttons.forEach(button => button.classList.remove('active'));
+
+          // Add 'active' class to the clicked button
+          selectedButton.classList.add('active');
+
+          // Set the selected role
+          selectedRole = role;
+          //console.log("Selected Role:", selectedRole);
+      }
+
+      // Function to pick a random player based on the selected role
+      // Function to pick a random player based on the selected role
+function pickPlayer() {
+    console.log("Selected Role:", selectedRole);
+    
+    // Log auction data to ensure it's being passed correctly
+    console.log("Auction Data:", auctionData);
+    
+    // Filter players based on the selected role and status 'remaining'
+    const filteredPlayers = auctionData.filter(player => {
+        //console.log("Checking player:", player);  // Log each player for debugging
+        return player["player_style"] === selectedRole && player.status === 'remaining';
+    });
+
+    console.log("Filtered Players:", filteredPlayers);  // Log filtered players
+
+    if (filteredPlayers.length > 0) {
+        // Pick a random player from the filtered list
+        const randomPlayer = filteredPlayers[Math.floor(Math.random() * filteredPlayers.length)];
+        
+        // Store picked player's data in a variable and display it in the "player-display" div
+        const playerDisplayDiv = document.getElementById('player-display');
+        playerDisplayDiv.innerHTML = `
+            <h3>Picked Player:</h3>
+            <p><strong>Name:</strong> ${randomPlayer.player}</p>
+            <p><strong>Role:</strong> ${randomPlayer["player_style"]}</p>
+            <p><strong>Nationality:</strong> ${randomPlayer["nationality"]}</p>
+            <p><strong>Base Price:</strong> ₹${randomPlayer["base_price"]} Cr.</p>`;
+        
+        console.log("Picked Player:", randomPlayer);
+
+        basePrice = randomPlayer["base_price"];
+        currentPlayer = randomPlayer['player'];  // Store picked player for future reference
+        speech = new SpeechSynthesisUtterance();
+        speech.text = 'Next Player is ' + randomPlayer.player + ' with a base price of ' + randomPlayer.base_price + ' crore.';
+        speech.volume = 1; // Full volume
+    speech.rate = 1; // Normal speed
+    speech.pitch = 1; // Normal pitch
+    window.speechSynthesis.speak(speech); // Speak the message
+
+        
+        return randomPlayer;  // Return picked player if needed
+    } else {
+        // Show popup if no players are left for this role
+        showPopup_np();
+        return null;  // No player picked
+    }
+}
+      // Function to show popup message for 2 seconds
+      function showPopup_np() {
+          const popup = document.getElementById('popup');
+          
+          popup.style.display = 'block'; // Show popup
+          
+          setTimeout(() => {
+              popup.style.display = 'none'; // Hide popup after 2 seconds
+          }, 2000);
+      }
+
+
+      function showPopup() {
+          const popup = document.getElementById('auction-popup');
+          const overlay = document.getElementById('overlay');
+          popup.style.display = 'block';
+          overlay.style.display = 'block';
+
+          // Populate the list of teams in the popup
+          const teamList = document.getElementById('team-list');
+          teamList.innerHTML = ''; // Clear any existing content
+          
+          teamsData.forEach(team => {
+              const li = document.createElement('li');
+              const button = document.createElement('button');
+              button.textContent = team.team; // Set button text to team name
+              button.onclick = () => selectTeam(team.team); // Set click handler
+              li.appendChild(button);
+              teamList.appendChild(li);
+          });
+      }
+
+      // Function to close the popup
+      function closePopup() {
+          const popup = document.getElementById('auction-popup');
+          const overlay = document.getElementById('overlay');
+          popup.style.display = 'none';
+          overlay.style.display = 'none';
+      }
+
+      // Function to select a team and display its players
+      function selectTeam(selectedTeam) {
+          closePopup(); // Close the popup after selection
+
+          // Filter auction data based on selected team
+          const filteredPlayers = auctionData.filter(player => player.team === selectedTeam);
+
+          // Display players in the "player-display" div
+          const playerDisplayDiv = document.getElementById('player-display');
+          
+          if (filteredPlayers.length > 0) {
+              let playerDetailsHTML = `<h3>Players for ${selectedTeam}:</h3><ul>`;
+              filteredPlayers.forEach(player => {
+                  playerDetailsHTML += `
+                      <li> ${player.player} ₹${player["price_in_cr"]} Cr 
+                          </li>`;
+              });
+              playerDetailsHTML += '</ul>';
+              playerDisplayDiv.innerHTML = playerDetailsHTML; // Update the div with player details
+          } else {
+              playerDisplayDiv.innerHTML = `<h3>No players found for ${selectedTeam}</h3>`;
+          }
+      }
+
+
+      // Function to handle team selection
+      function selectTeam_Button(selectedButton, teamName) {
+          // Deselect all buttons
+          const buttons = document.querySelectorAll('.team-button');
+          buttons.forEach(button => button.classList.remove('active'));
+
+          // Select the clicked button
+          selectedButton.classList.add('active');
+
+          // Set the selected team
+          selectedTeam = teamName;
+
+          console.log("Selected Team:", selectedTeam);
+
+          // Pick a player based on role (you can modify this as needed)
+          //pickPlayer();
+      }
+        //let currentBid = 0.0;
+
+        // Function to increase the bid value
+        function increaseBid() {
+    if (currentPlayer) {
+        // Check if currentBid is less than 2 Cr, and increment accordingly
+        if(currentBid == 0.0){
+            currentBid = Math.round((0.0 + basePrice) * 10) / 10;
+        }
+        else{
+        if (currentBid < 2) {
+            currentBid = Math.round((currentBid + 0.1) * 10) / 10; // Increase by 0.1 Cr
+        } else {
+            currentBid = Math.round((currentBid + 0.2) * 10) / 10; // Increase by 0.2 Cr
+        }
+    }
+        const bidElement = document.getElementById('current-bid');
+        
+        // Update the display and trigger the animation
+        bidElement.textContent = currentBid.toFixed(1);
+        
+        // Trigger animation
+        bidElement.classList.remove('animate-bid');
+        void bidElement.offsetWidth; // Trigger reflow to restart animation
+        bidElement.classList.add('animate-bid');
+        
+        // Call the function to read out the current bid
+        readOutBid(currentBid);
+    } else {
+        alert("No player selected!");
+    }
+}
+
+
+function readOutBid(bid) {
+    const speech = new SpeechSynthesisUtterance();
+
+    // Customize spoken text for whole numbers vs. decimals
+    speech.text = bid % 1 === 0 
+                  ? `${bid.toFixed(0)} crore.`          // No decimal for whole numbers like 1.0
+                  : `${bid.toFixed(1)} crore.`;         // One decimal place for non-whole numbers
+
+    // Get available voices
+    const voices = window.speechSynthesis.getVoices();
+
+    // Select "Microsoft George" for a British male voice
+    const selectedVoice = voices.find(voice => voice.name === "Microsoft George - English (United Kingdom)") 
+                          || voices[0]; // Fallback to the first voice if not found
+
+    // Set the selected voice
+    speech.voice = selectedVoice;
+    speech.lang = selectedVoice.lang;
+
+    // Additional options for an auctioneer style
+    speech.volume = 1;       // Full volume
+    speech.rate = 0.8;       // Slightly faster rate for an auctioneer feel
+    speech.pitch = 0.5;      // Slightly lower pitch for emphasis
+
+    // Speak the text
+    window.speechSynthesis.speak(speech);
+}
+
+
+// Ensure voices are loaded (needed by some browsers)
+window.speechSynthesis.onvoiceschanged = () => {
+    // Ensures voices are ready when calling `getVoices()`
+};
+
+
+
+    
+
+         // Function to sell the player and update auction data
+         function sellPlayer() {
+    if (!currentPlayer) {
+        alert("No player selected!");
+        return;
+    }
+
+    const speech = new SpeechSynthesisUtterance(); // Create a SpeechSynthesisUtterance instance
+
+    // Check if no team is selected
+    if (selectedTeam === null) {
+        currentPlayer.status = 'unsold';
+        alert(`${currentPlayer} is unsold.`);  // Assuming `currentPlayer` has a `player` property
+        const auctionIndex = auctionData.findIndex(player => player.player === currentPlayer);
+        if (auctionIndex !== -1) {
+            auctionData[auctionIndex].status = 'unsold';
+        }
+
+        // Set voice message for unsold player
+        speech.text = `${currentPlayer} is unsold.`; // Pronounce the player's name
+    } else { // Team is selected, so mark the player as sold
+        currentPlayer.status = 'sold';
+        currentPlayer.price_in_cr = currentBid.toFixed(1);
+        currentPlayer.team = selectedTeam;
+
+        // Deduct from team's remaining purse
+        const teamData = teamsData.find(team => team.team === selectedTeam);
+        if (teamData) {
+            teamData.purse -= parseFloat(currentBid);
+            console.log(`Updated ${selectedTeam}'s purse to ₹${teamData.purse} Cr`);
+            alert(`${currentPlayer} sold to ${selectedTeam} for ₹${currentBid} Cr`);
+
+            // Set voice message for sold player
+            speech.text = `${currentPlayer} sold to ${selectedTeam} for ${currentBid.toFixed(1)} crore.`;
+        }
+
+        console.log("Current Player:", currentPlayer);
+
+        // Update auction data for this player
+        const auctionIndex = auctionData.findIndex(player => player.player === currentPlayer);
+        if (auctionIndex !== -1) {
+            auctionData[auctionIndex].status = 'sold';
+            auctionData[auctionIndex].price_in_cr = currentBid.toFixed(1);
+            auctionData[auctionIndex].team = selectedTeam;
+            console.log(`Updated Auction Data for ${currentPlayer.player}`);
+            console.log(auctionIndex);
+            console.log(auctionData[auctionIndex]);
+            console.log(auctionData);
+        }
+    }
+
+    // Speak the text for sold or unsold
+    speech.volume = 1; // Full volume
+    speech.rate = 1; // Normal speed
+    speech.pitch = 1; // Normal pitch
+    window.speechSynthesis.speak(speech); // Speak the message
+
+    resetAuction();
+}
+
+// Function to reset auction after selling a player
+function resetAuction() {
+    currentBid = 0.0; // Reset bid value
+    document.getElementById('current-bid').textContent = currentBid.toFixed(1); // Reset display
+
+    currentPlayer = null; // Reset player selection
+    updateTicker(); // Update ticker with new purse values
+    selectedTeam = null; // Reset selected team
+}
+
+
+    // Function to play the IPL trumpet sound when the page loads
+    window.onload = function() {
+    const iplTrumpet = document.getElementById('ipl-trumpet');
+    iplTrumpet.play(); // Play the IPL trumpet sound
+
+    // Wait for the trumpet sound to finish before speaking
+    iplTrumpet.onended = function() {
+        // Create a new speech synthesis utterance
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = "Ladies and Gentlemen, welcome to the IPL player auction 2025.";
+
+        // You can customize the voice, rate, pitch, etc.
+        const voices = window.speechSynthesis.getVoices();
+        const selectedVoice = voices.find(voice => voice.lang === 'en-GB' && voice.name.includes("male")) 
+                              || voices[0]; // Fallback to first available voice
+        speech.voice = selectedVoice;
+        speech.volume = 1;  // Full volume
+        speech.rate = 1;    // Normal speed
+        speech.pitch = 1;   // Normal pitch
+
+        // Speak the text after the trumpet sound finishes
+        window.speechSynthesis.speak(speech);
+    };
+};
+
+
+    </script>
 
 </body>
 </html>

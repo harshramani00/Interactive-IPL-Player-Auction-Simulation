@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPL Auction 2024</title>
     
-    <!-- Google Font: Montserrat (similar to IPL style) -->
+    <!-- Google Font: Montserrat -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap">
 
     <style>
@@ -13,12 +13,13 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden; /* Prevents scroll during loading animation */
         }
 
         /* Header styling */
         .header {
-            background-color: #003366; /* Dark blue background similar to IPL theme */
+            background-color: #003366;
             color: white;
             display: flex;
             align-items: center;
@@ -28,7 +29,7 @@
 
         /* Logo styling */
         .header img {
-            height: 50px; /* Adjust height as needed */
+            height: 50px;
         }
 
         /* Text styling */
@@ -47,13 +48,14 @@
 
         /* Background image section */
         .background-section {
-            background-image: url('src/auctiontop.jpg'); /* Background image URL */
+            background-image: url('{{ url_for('static', filename='src/auctiontop.jpg') }}');
             background-size: cover;
             background-position: center;
-            height: 91vh; /* Full viewport height */
+            height: 91vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         /* Start button styling */
@@ -62,19 +64,67 @@
             font-size: 18px;
             font-weight: bold;
             color: white;
-            background-color: #ff6600; /* Orange button color */
+            background-color: #ff6600;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
+            font-family: 'Montserrat', sans-serif;
             position: absolute;
-            top: 85%;   /* Moves the button down by 200 pixels from the top of its container */
-            left: 46%;  /* Moves the button right by 100 pixels from the left edge of its container */
+            top: 87%;
+            left: 46%;
+            transition: transform 0.3s ease; /* Smooth transition */
         }
 
         .start-button:hover {
-            background-color: #cc5200; /* Darker orange on hover */
+            background-color: #cc5200;
+            transform: scale(1.05); /* Slight scaling effect on hover */
         }
+
+        /* Loading Screen Overlay */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0; /* Start hidden */
+            visibility: hidden; /* Start hidden */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* Smooth transition for visibility and opacity */
+        }
+
+        .loading-screen.active {
+            opacity: 1; /* Show when active */
+            visibility: visible; /* Show when active */
+        }
+
+        /* Loader animation */
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #003366; /* Same color as header */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite; /* Spin animation for loader */
+        }
+
+        /* Spin animation */
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        /* Loading text */
+        .loading-text {
+          margin-top: 20px; 
+          font-size: 18px; 
+          color:#003366; 
+      }
     </style>
 </head>
 <body>
@@ -82,18 +132,41 @@
     <!-- Header Section -->
     <div class="header">
         <!-- IPL Logo -->
-        <img src="src/logo.jpg" alt="IPL Logo">
+        <img src="{{ url_for('static', filename='src/logo.jpg') }}" alt="IPL Logo">
 
         <!-- Welcome Text -->
         <div class="center-text">
-            <h1>Welcome to IPL Player Auction 2024</h1>
-        </div>
+          <h1>Welcome to IPL Player Auction 2024</h1>
+      </div>
     </div>
 
     <!-- Background Section with Start Button -->
-    <div class="background-section">
-        <button class="start-button" onclick="window.location.href='Auction.html'">Start</button>
+    <div class="background-section" >
+      <button class="start-button" onclick="startAuction()">Start</button>
     </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loader"></div>
+      <p class="loading-text">Redirecting you to auction...</p>
+    </div>
+
+    <!-- Script to handle transition effect -->
+    <script>
+      function startAuction() {
+          // Show the loading screen with animation
+          const loadingScreen = document.getElementById('loading-screen');
+          loadingScreen.classList.add('active'); // Use class to show
+
+          // Use requestAnimationFrame or a short timeout to ensure DOM updates
+          setTimeout(function() {
+              // Delay navigation to show loading animation for 1.5 seconds
+              setTimeout(function() {
+                  window.location.href = "{{ url_for('auction') }}"; 
+              }, 1500);
+          }, 50); // Small delay to allow DOM rendering
+      }
+    </script>
 
 </body>
 </html>
