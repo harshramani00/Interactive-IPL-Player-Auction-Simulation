@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Auction 2024</title>
+    
+    <!-- Google Font: Montserrat (similar to IPL style) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap">
+
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #003366; /* Dark blue background similar to IPL theme */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        /* Logo styling */
+        .header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        /* Text styling */
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Centered text */
+        .center-text {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Background image section */
+        .background-section {
+            background-image: url('src/auctiontop.jpg'); /* Background image URL */
+            background-size: cover;
+            background-position: center;
+            height: 91vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Start button styling */
+        .start-button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #ff6600; /* Orange button color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
+            position: absolute;
+            top: 85%;   /* Moves the button down by 200 pixels from the top of its container */
+            left: 46%;  /* Moves the button right by 100 pixels from the left edge of its container */
+        }
+
+        .start-button:hover {
+            background-color: #cc5200; /* Darker orange on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <!-- IPL Logo -->
+        <img src="src/logo.jpg" alt="IPL Logo">
+
+        <!-- Welcome Text -->
+        <div class="center-text">
+            <h1>Welcome to IPL Player Auction 2024</h1>
+        </div>
+    </div>
+
+    <!-- Background Section with Start Button -->
+    <div class="background-section">
+        <button class="start-button" onclick="window.location.href='Auction.html'">Start</button>
+    </div>
+
+</body>
+</html>
